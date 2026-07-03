@@ -32,3 +32,23 @@ First clean draft. Before publication, it still needs:
 3. Scripture-translation verification;
 4. Ukrainian editorial pass;
 5. final decision on public release format: Markdown, PDF, EPUB, print, or site.
+
+## Build and releases
+
+The repository includes a GitHub Actions pipeline that compiles the manuscript into:
+
+- Markdown (`.md`)
+- HTML (`.html`)
+- Word (`.docx`)
+- EPUB (`.epub`)
+- PDF (`.pdf`)
+- ZIP bundle with checksums
+
+Manual local build, when Pandoc and XeLaTeX are installed:
+
+```bash
+bash scripts/build-book.sh
+```
+
+Every push and pull request uploads build artifacts. Every tag matching `v*` also publishes a GitHub Release with the generated files attached.
+

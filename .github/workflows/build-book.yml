@@ -1,0 +1,65 @@
+name: Build book
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Markdown, HTML, DOCX, EPUB, PDF
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Pandoc and PDF dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            pandoc \
+            lmodern \
+            texlive-xetex \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-lang-cyrillic \
+            fonts-dejavu-core \
+            ca-certificates
+
+      - name: Build book artifacts
+        run: bash scripts/build-book.sh
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: compatibility-for-single-christians
+          path: |
+            dist/compatibility-for-single-christians.md
+            dist/compatibility-for-single-christians.html
+            dist/compatibility-for-single-christians.docx
+            dist/compatibility-for-single-christians.epub
+            dist/compatibility-for-single-christians.pdf
+            dist/compatibility-for-single-christians-artifacts.zip
+            dist/SHA256SUMS.txt
+          if-no-files-found: error
+
+      - name: Publish GitHub Release for tags
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/compatibility-for-single-christians.md
+            dist/compatibility-for-single-christians.html
+            dist/compatibility-for-single-christians.docx
+            dist/compatibility-for-single-christians.epub
+            dist/compatibility-for-single-christians.pdf
+            dist/compatibility-for-single-christians-artifacts.zip
+            dist/SHA256SUMS.txt

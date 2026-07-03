@@ -1,0 +1,37 @@
+body {
+  font-family: "DejaVu Serif", Georgia, serif;
+  line-height: 1.55;
+  max-width: 760px;
+  margin: 3rem auto;
+  padding: 0 1.25rem;
+  color: #1f2933;
+  background: #fffaf3;
+}
+
+h1, h2, h3 {
+  font-family: "DejaVu Sans", system-ui, sans-serif;
+  line-height: 1.2;
+  color: #17212b;
+}
+
+h1 {
+  margin-top: 2.4rem;
+  border-bottom: 1px solid #d8c9ae;
+  padding-bottom: 0.35rem;
+}
+
+blockquote {
+  border-left: 4px solid #b58b44;
+  margin-left: 0;
+  padding-left: 1rem;
+  color: #374151;
+  background: #fff4df;
+}
+
+a {
+  color: #7c4a03;
+}
+
+code {
+  font-family: "DejaVu Sans Mono", monospace;
+}
